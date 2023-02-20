@@ -2,12 +2,31 @@ import requests
 from bs4 import BeautifulSoup
 from header_tags_handler import extract_data, check_keywords, check_title
 from utils import check_element_existence 
-from fastapi import FastAPI
-app = FastAPI()
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 
+app = FastAPI()
+origins = ["*"]
+url = {"value": "https://uenf.br/portal/"}
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.post("/url")
+async def get_URL(data : Request):
+    req_info = await data.json()
+    url["value"] = req_info["url"]
+    print(url)
+    return { "url": req_info }
+
+print(url)
 # url = 'https://uenf.br/portal/'
-url = 'https://cc.uenf.br/'
-res = requests.get(url)
+res = requests.get(url["value"])
 page = res.text
 
 html_page = BeautifulSoup(page, 'html.parser')
