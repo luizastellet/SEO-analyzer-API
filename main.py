@@ -1,13 +1,10 @@
-import requests
-from bs4 import BeautifulSoup
-from header_tags_handler import extract_data, check_keywords, check_title
-from utils import check_element_existence 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from get_data import get_info
 
 app = FastAPI()
 origins = ["*"]
-url = {"value": "https://uenf.br/portal/"}
+url = {"value": ""}
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,42 +15,17 @@ app.add_middleware(
 )
 
 @app.post("/url")
-async def get_URL(data : Request):
+async def create_URL(data : Request):
     req_info = await data.json()
     url["value"] = req_info["url"]
-    print(url)
     return { "url": req_info }
 
-print(url)
-# url = 'https://uenf.br/portal/'
-res = requests.get(url["value"])
-page = res.text
+@app.get("/url")
+def get_URL():
+    return url
 
-html_page = BeautifulSoup(page, 'html.parser')
-html_page.prettify()
-
-head = html_page.head
-body = html_page.body
-meta = head.find_all('meta')
-meta_data = extract_data(meta) 
-
-
-meta_data = check_element_existence(["description", "keywords"], meta_data)
-
-
-@app.get("/title")
-def get_title():
-    title = check_title(html_page.title)
-    return {"title": title }
-
-@app.get("/keywords")
-def get_keywords():
-    keywords = check_keywords(meta_data["keywords"])
-    return {"keywords": keywords }
-
-@app.get("/meta")
-def get_meta():
-    return {"meta_data": meta_data }
-
-
-
+@app.get("/page/")
+def get_page_info():
+    url = get_URL().get("value")
+    data = get_info(url)
+    return data
