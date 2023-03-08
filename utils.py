@@ -11,3 +11,6 @@ def check_element_existence(elements_arr, data):
         else: 
             res.update({ element: None})
     return res
+
+def format_error_position(element):
+    return "Posição: linha {}, coluna {}. ".format(element.sourceline, element.sourcepos)

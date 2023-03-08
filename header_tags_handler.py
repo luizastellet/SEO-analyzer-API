@@ -1,8 +1,7 @@
 from fastapi import FastAPI
+from utils import format_error_position
 app = FastAPI()
 
-def format_error_position(title):
-    return "Posição: linha {}, coluna {}. ".format(title.sourceline, title.sourcepos)
 
 def extract_data(data):
     data_dict = {}
@@ -18,25 +17,19 @@ def check_keywords(keywords):
     if keywords is None:
         # error_position = format_error_position(keywords)
         return {
-            'errorType': 'error',
-            'errorName': 'Tag de keywords deve possuir conteúdo.',
-            'errorMessage': 'BLABLABALBALBALAB',
-            'errorTag': keywords,
-            # 'errorPosition': error_position
+           
         }
 
     return keywords
     
 
 def check_title(title):
-    if title is None:
-        error_position = format_error_position(title)
+    if title.string is None: 
         return {
             'errorType': 'error',
             'errorName': 'Tag de Título deve possuir conteúdo.',
             'errorMessage': 'BLABLABALBALBALAB',
-            'errorTag': title,
-            'errorPosition': error_position
+            'errorTag': str(title),
+            'errorPosition': format_error_position(title)
         }
-        
-    return title.string
+    return 
