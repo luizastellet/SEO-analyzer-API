@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from header_tags_handler import extract_data, check_keywords, check_title
 from utils import check_element_existence
-from images_handler import func
+from title_handler import get_title
 
 def get_html(url):
     res = requests.get(url)
@@ -18,20 +18,19 @@ def get_meta_data(head):
 
 
 def get_info(url):
+    result = []
     html_page = get_html(url)
     head = html_page.head
     body = html_page.body
     meta_data = get_meta_data(html_page)
-    title = check_title(html_page.title)
-    print("title", title)
+    title = get_title(html_page.title)
+    # result.append(check_title(html_page.title))    
     # keywords = check_keywords(meta_data["keywords"])
     # images = body.find_all('img')
     # func(images)
 
     
     return {
-        "title": title, 
-        # "keywords": keywords, 
-        # "images": images
+        'title': title
     }
 

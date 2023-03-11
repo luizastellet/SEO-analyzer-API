@@ -26,6 +26,7 @@ def check_keywords(keywords):
 def check_title(title):
     if title.string is None: 
         return {
+            'tagName': 'Title',
             'errorType': 'error',
             'errorName': 'Tag de Título deve possuir conteúdo.',
             'errorMessage': 'BLABLABALBALBALAB',
