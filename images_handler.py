@@ -8,11 +8,19 @@ error = [
     }
 ]
 
-def check_alt_attr(imgs_arr):
-    for img in imgs_arr:
-        alt = img.attrs.get("alt")
-        print(alt)
+def get_images(images):
+    result = []
+    
+    # for image in images:
+    #     if (image.attrs.get("alt") == ''):
+    #         # print(f'{image} \n\n')
 
-def func(images):
-    check_alt_attr(images)
     # return img_arr
+    # return 'alo'
+
+    # return [{
+    #         'title': None, 
+    #         'type': 'error',
+    #         'errorName': 'Tag de título não possui conteúdo.',
+    #         'tag': str(title),
+    #     }]

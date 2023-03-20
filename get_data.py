@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 from header_tags_handler import extract_data, check_keywords, check_title
 from utils import check_element_existence
 from title_handler import get_title
+from images_handler import get_images
+from headings_handler import get_headings
 
 def get_html(url):
     res = requests.get(url)
@@ -24,6 +26,8 @@ def get_info(url):
     body = html_page.body
     meta_data = get_meta_data(html_page)
     title = get_title(html_page.title)
+    images = get_images((html_page.find_all('img')))
+    headings = get_headings(html_page)
     # result.append(check_title(html_page.title))    
     # keywords = check_keywords(meta_data["keywords"])
     # images = body.find_all('img')
@@ -31,6 +35,9 @@ def get_info(url):
 
     
     return {
-        'title': title
+        'title': title,
+        'headings': headings,
+        # 'headings': headings,
     }
 
+ 
