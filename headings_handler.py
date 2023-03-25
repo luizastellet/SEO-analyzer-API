@@ -1,27 +1,31 @@
 def get_h1(html):
     h1_arr = html.find_all('h1')
+
     if (not h1_arr):
-        return [{
+        return {
             'content': None,
             'type': 'error',
-            'errorName': 'A página não possui o elemento de cabeçalho H1.',
+            'errorName': 'A página não possui o elemento de cabeçalho h1.',
             'tag': '<h1>',
-        }]
+        }
 
-    if (h1_arr > 1):
-        return [{
-            'content': [h1_arr],
+    res = []
+    for item in h1_arr:
+        res.append(item.string)
+    if (len(res) > 1):
+        return {
+            'content': res,
             'type': 'error',
             'errorName': 'Uma página não deve possuir mais de um elemento h1.',
             'tag': '<h1>',
-        }]
+        }
 
-    return [{
-            'content': [h1_arr],
+    return {
+            'content': res,
             'type': 'info',
             'errorName': None,
             'tag': '<h1>',
-            }]
+            }
 
 def get_others_headings(html):
     heading_list = ['h2', 'h3', 'h4', 'h5', 'h6']
