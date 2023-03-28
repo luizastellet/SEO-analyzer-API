@@ -8,19 +8,59 @@ error = [
     }
 ]
 
-def get_images(images):
+
+def get_others_headings(html):
+    heading_list = ['h2', 'h3', 'h4', 'h5', 'h6']
     result = []
-    
-    # for image in images:
-    #     if (image.attrs.get("alt") == ''):
-    #         # print(f'{image} \n\n')
+    for idx, element in enumerate(heading_list):
+        heading_arr = html.find_all(element)
+        if (not heading_arr):
+                result.append({
+                    'content': None,
+                    'type': 'error',
+                    'errorName': f'A página não possui o elemento de cabeçalho h{str(idx+2)} .',
+                    'tag': f'<h{str(idx+2)}>', 
+                })
+        else:
+            for item in heading_arr:
+                result.append({
+                    'content': str(item.contents),
+                    'type': 'info',
+                    'errorName': None,
+                    'tag': f'<h{str(idx+2)}>',
+                }) 
 
-    # return img_arr
-    # return 'alo'
+    return result
 
-    # return [{
-    #         'title': None, 
-    #         'type': 'error',
-    #         'errorName': 'Tag de título não possui conteúdo.',
-    #         'tag': str(title),
-    #     }]
+def get_images(html_page):
+
+    images_arr = html_page.find_all('img')
+    res = []
+    if (not images_arr):
+        res.append({
+            'content': None,
+            'type': 'error',
+            'errorName': 'A página não possui o nenhuma imagem.',
+            'tag': '<img>',
+        })
+
+    for item in images_arr:
+        if (item["alt"]):
+            res.append({
+                "url": item["src"],
+                'content': item["alt"],
+                'type': 'info',
+                'errorName': None,
+                'tag': '<img>',
+            })
+        else: 
+            res.append({
+                "url": item["src"],
+                'content': None,
+                'type': 'error',
+                'errorName': 'Elemento de imagem não possui atributo de texto alternativo.',
+                'tag': '<img>',
+            })
+        
+
+    return res

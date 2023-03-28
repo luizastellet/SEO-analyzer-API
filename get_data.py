@@ -26,7 +26,7 @@ def get_info(url):
     body = html_page.body
     meta_data = get_meta_data(html_page)
     title = get_title(html_page.title)
-    images = get_images((html_page.find_all('img')))
+    images = get_images(html_page)
     headings = get_headings(html_page)
     # result.append(check_title(html_page.title))    
     # keywords = check_keywords(meta_data["keywords"])
@@ -37,7 +37,7 @@ def get_info(url):
     return {
         'title': title,
         'headings': headings,
-        # 'headings': headings,
+        'images': images,
     }
 
  
