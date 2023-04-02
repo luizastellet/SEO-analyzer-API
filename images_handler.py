@@ -40,7 +40,7 @@ def get_images(html_page):
         res.append({
             'content': None,
             'type': 'error',
-            'errorName': 'A página não possui o nenhuma imagem.',
+            'errorName': 'A página não possui nenhuma imagem.',
             'tag': '<img>',
         })
 
