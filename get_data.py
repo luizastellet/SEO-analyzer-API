@@ -5,6 +5,7 @@ from utils import check_element_existence
 from title_handler import get_title
 from images_handler import get_images
 from headings_handler import get_headings
+from description_handler import get_description
 
 def get_html(url):
     res = requests.get(url)
@@ -25,6 +26,7 @@ def get_info(url):
     head = html_page.head
     body = html_page.body
     meta_data = get_meta_data(html_page)
+    description = get_description(meta_data["description"])
     title = get_title(html_page.title)
     images = get_images(html_page)
     headings = get_headings(html_page)
@@ -38,6 +40,7 @@ def get_info(url):
         'title': title,
         'headings': headings,
         'images': images,
+        'description': description, 
     }
 
  
