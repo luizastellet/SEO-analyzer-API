@@ -6,6 +6,7 @@ from title_handler import get_title
 from images_handler import get_images
 from headings_handler import get_headings
 from description_handler import get_description
+from keyword_handler import count_keywords
 
 def get_html(url):
     res = requests.get(url)
@@ -26,21 +27,21 @@ def get_info(url):
     head = html_page.head
     body = html_page.body
     meta_data = get_meta_data(html_page)
-    description = get_description(meta_data["description"])
     title = get_title(html_page.title)
+    description = get_description(meta_data["description"])
+    keywords = count_keywords(meta_data["keywords"], body)
     images = get_images(html_page)
     headings = get_headings(html_page)
     # result.append(check_title(html_page.title))    
-    # keywords = check_keywords(meta_data["keywords"])
     # images = body.find_all('img')
     # func(images)
-
     
     return {
         'title': title,
         'headings': headings,
         'images': images,
         'description': description, 
+        'keywords': keywords
     }
 
  
