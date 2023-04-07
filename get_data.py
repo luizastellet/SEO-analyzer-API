@@ -32,10 +32,9 @@ def get_info(url):
     keywords = count_keywords(meta_data["keywords"], body)
     images = get_images(html_page)
     headings = get_headings(html_page)
-    # result.append(check_title(html_page.title))    
-    # images = body.find_all('img')
-    # func(images)
+
     
+
     return {
         'title': title,
         'headings': headings,
