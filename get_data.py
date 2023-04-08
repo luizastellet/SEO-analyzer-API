@@ -7,6 +7,8 @@ from images_handler import get_images
 from headings_handler import get_headings
 from description_handler import get_description
 from keyword_handler import count_keywords
+from semantic_tags_handler import get_semantic_tags
+from internal_links_handler import get_internal_links
 
 def get_html(url):
     res = requests.get(url)
@@ -32,15 +34,16 @@ def get_info(url):
     keywords = count_keywords(meta_data["keywords"], body)
     images = get_images(html_page)
     headings = get_headings(html_page)
-
-    
+    semantic_tags = get_semantic_tags(html_page)
+    internal_links = get_internal_links(url, html_page)
 
     return {
         'title': title,
         'headings': headings,
         'images': images,
         'description': description, 
-        'keywords': keywords
+        'keywords': keywords,
+        'semanticTags': semantic_tags,
     }
 
  

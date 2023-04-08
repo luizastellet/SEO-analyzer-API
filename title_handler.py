@@ -1,5 +1,5 @@
 def get_title(title):
-    if title.string is None: 
+    if title is None or title.string is None: 
         return [{
             'title': None, 
             'type': 'error',
