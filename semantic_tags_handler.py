@@ -1,5 +1,4 @@
 
-
 def get_semantic_tags(html):
     semantic_tags = [
     {

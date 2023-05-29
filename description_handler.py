@@ -1,9 +1,9 @@
-def get_description(description): 
+def description_analyzer(description): 
     if description is None:
         return {
             'content': None,
-            'type': 'warning',
-            'errorName': 'Página não possui meta tag de descrição.',
+            'type': 'error',
+            'infoText': 'Página não possui meta tag de descrição ou seu conteúdo está vazio.',
             'tag': '<meta name=description>',
         }
     
@@ -11,13 +11,13 @@ def get_description(description):
         return {
             'content': description,
             'type': 'warning',
-            'errorName': 'A descrição não deve ultrapassar o tamanho de 160 caracteres. ',
+            'infoText': 'A descrição não deve ultrapassar o tamanho de 160 caracteres.',
             'tag': '<meta name=description>',
         }
     
     return {
         'content': description,
-        'type': 'info',
-        'errorName': None,
+        'type': 'check',
+        'infoText': None,
         'tag': '<meta name=description>',
     }

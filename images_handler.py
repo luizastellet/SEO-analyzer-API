@@ -32,17 +32,17 @@ def get_others_headings(html):
 
     return result
 
-def get_images(html_page):
+def analyze_images(html_page):
 
     images_arr = html_page.find_all('img')
     res = []
     if (not images_arr):
-        res.append({
+        return [{
             'content': None,
-            'type': 'error',
+            'type': 'info',
             'errorName': 'A página não possui nenhuma imagem.',
             'tag': '<img>',
-        })
+        }]
 
     for item in images_arr:
         if (item["alt"]):

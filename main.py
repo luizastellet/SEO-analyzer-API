@@ -5,6 +5,7 @@ from get_data import get_info
 app = FastAPI()
 origins = ["*"]
 url = {"value": ""}
+page = {"data": ""}
 
 app.add_middleware(
     CORSMiddleware,
@@ -15,10 +16,11 @@ app.add_middleware(
 )
 
 @app.post("/url")
-async def create_URL(data : Request):
+async def save_URL(data: Request):
     req_info = await data.json()
     url["value"] = req_info["url"]
-    return { "url": req_info }
+    page["data"] = get_info(url["value"])
+    return { "message": "url enviada com sucesso" }
 
 @app.get("/url")
 def get_URL():
@@ -26,6 +28,4 @@ def get_URL():
 
 @app.get("/page/")
 def get_page_info():
-    url = get_URL().get("value")
-    data = get_info(url)
-    return data
+    return page["data"]
