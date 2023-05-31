@@ -43,13 +43,15 @@ def get_info(url):
     keyword_density = keywords_density(keywords, html_page.body)
     keyword_in_url = url_analyzer(url, meta_data["keywords"])
     keyword_location = keyword_location_analyzer(keywords, title, description, html_page)
-
     return {
         'title': title_result,
         'headings': headings,
         'images': images,
         'description': description_result, 
         'keywords': keyword_density,
+        "internalLinks": internal_links,
+        "keywordsInURL": keyword_in_url,
+        "keywordsLocation": keyword_location
     }
 
  

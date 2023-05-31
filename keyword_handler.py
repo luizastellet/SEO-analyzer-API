@@ -29,10 +29,15 @@ def keywords_density(keywords_arr, html):
     for keyword in keywords: 
         matches = re.findall(keyword, html_str, re.IGNORECASE)
         density = (len(matches) / total_count) * 100
+        if (density < 2 or density > 8):
+            result_type = 'error' 
+        else:
+            result_type = 'check' 
         result.append({
             'keyword': keyword, 
             'count': len(matches),
-            'density': "%.2f" % density
+            'density': "%.2f" % density,
+            'type': result_type
         })
 
     return result
@@ -78,13 +83,16 @@ def keyword_location_analyzer(keywords, title, description, html):
         for i in range(1, 6):
             heading_arr = html.find_all(f'h{i}') 
             for heading in heading_arr:
+                heading = (str(heading.contents[0])).lower()
                 if (heading is not None): 
                     if keyword in heading: 
                         heading_result.append({
-                            f'A palavra-chave {keyword} está presente em uma tag h{i}. '
+                            'content': keyword,
+                            'type': 'check',
+                            'infoText': f'A palavra-chave {keyword} está presente em uma tag h{i}. ',
+                            'tag': '<h1> ... <h6>',
                         })
-        
-    
+                                
     if (not heading_result): 
         heading_result = [{
             'content': None,
@@ -106,11 +114,11 @@ def keyword_location_analyzer(keywords, title, description, html):
             'content': None,
             'type': 'error',
             'infoText': 'Não existem palavras-chaves na descrição da página.',
-            'tag': '<title>',
+            'tag': '<meta description>',
         }]
 
     return {
-        "heading_result": heading_result, 
-        "title_result": title_result, 
-        "description_result": description_result
+        "heading": heading_result, 
+        "title": title_result, 
+        "description": description_result
     }

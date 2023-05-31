@@ -1,13 +1,3 @@
-error = [
-    { "image_no_alt_text": { 
-        'errorType': 'error',
-        'errorText': 'Imagem não possui alt text.',
-        'errorMessage': 'Textos alternativos são importantes para SEO, pois fornecem contexto ao mecanismo de busca.',
-        'errorTag':'image'
-        }
-    }
-]
-
 
 def get_others_headings(html):
     heading_list = ['h2', 'h3', 'h4', 'h5', 'h6']
@@ -18,7 +8,7 @@ def get_others_headings(html):
                 result.append({
                     'content': None,
                     'type': 'error',
-                    'errorName': f'A página não possui o elemento de cabeçalho h{str(idx+2)} .',
+                    'infoText': f'A página não possui o elemento de cabeçalho h{str(idx+2)} .',
                     'tag': f'<h{str(idx+2)}>', 
                 })
         else:
@@ -26,7 +16,7 @@ def get_others_headings(html):
                 result.append({
                     'content': str(item.contents),
                     'type': 'info',
-                    'errorName': None,
+                    'infoText': None,
                     'tag': f'<h{str(idx+2)}>',
                 }) 
 
@@ -40,7 +30,7 @@ def analyze_images(html_page):
         return [{
             'content': None,
             'type': 'info',
-            'errorName': 'A página não possui nenhuma imagem.',
+            'infoText': 'A página não possui nenhuma imagem.',
             'tag': '<img>',
         }]
 
@@ -49,8 +39,8 @@ def analyze_images(html_page):
             res.append({
                 "url": item["src"],
                 'content': item["alt"],
-                'type': 'info',
-                'errorName': None,
+                'type': 'check',
+                'infoText': None,
                 'tag': '<img>',
             })
         else: 
@@ -58,7 +48,7 @@ def analyze_images(html_page):
                 "url": item["src"],
                 'content': None,
                 'type': 'error',
-                'errorName': 'Elemento de imagem não possui atributo de texto alternativo.',
+                'infoText': 'Elemento de imagem não possui atributo de texto alternativo.',
                 'tag': '<img>',
             })
         

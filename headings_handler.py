@@ -36,7 +36,7 @@ def others_headings_analyzer(html):
                 result.append({
                     'content': None,
                     'type': 'warning',
-                    'infoText': f'A página não possui o elemento de cabeçalho h{str(idx+2)} .',
+                    'infoText': f'A página não possui o elemento de cabeçalho h{str(idx+2)}.',
                     'tag': f'<h{str(idx+2)}>', 
                 })
         else:
